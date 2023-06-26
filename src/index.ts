@@ -33,13 +33,18 @@ interface CardPaymentPayload {
     user: string
 }
 
+interface contructorPayload {
+    appId: string,
+     apiKey: string
+}
+
 class Astrious {
     private appId: string;
     private apiKey: string;
 
-    constructor(appId: string, apiKey: string) {
-        this.appId = appId;
-        this.apiKey = apiKey;
+    constructor( payload : contructorPayload ) {
+        this.appId = payload.appId;
+        this.apiKey = payload.apiKey;
     }
 
     async createTransfer(payload: CreateTransferPayload): Promise<AxiosResponse<string, any>> {
@@ -50,7 +55,7 @@ class Astrious {
 
         return await axios({
             method: "POST",
-            url: `${config.endpoint}/createTransfer`,
+            url: `${config.endpoint}/publicCreateTransfer`,
             headers: {
                 'authorization': `Basic ${encodedCredentials}`
             },
@@ -65,7 +70,7 @@ class Astrious {
 
         return await axios({
             method: "POST",
-            url: `${config.endpoint}/propayFunctions-handleCardPayment`,
+            url: `${config.endpoint}/publicHandleCardPayment`,
             headers: {
                 'authorization': `Basic ${encodedCredentials}`
             },
